@@ -82,6 +82,7 @@
 # Во что столбцы преобразуются в модели (Data Types Matrix)
 Тип данных, который ты выбираешь в Power Query, напрямую определяет, как VertiPaq упакует колонку.
 Тип данных в Power Query | Тип в VertiPaq | Тип кодирования | Поведение словаря и RLE 
+
 Fixed Decimal / Currency | Int64 (умноженный на 10 000) | Value Encoding | Словаря нет. Идеальное сжатие и молниеносные математические операции.
 Whole Number (123) | Int64 | Value Encoding | Словаря нет. Сжимается идеально.
 Decimal Number / Float (1.2) | Double | Hash Encoding | Создается словарь. Неточности с плавающей точкой усложняют RLE.
