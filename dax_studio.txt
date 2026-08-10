@@ -131,6 +131,22 @@ Columnar engine разбивает данные на сегменты
 -параллельной обработки.
 Microsoft отдельно предоставляет DMV INFO.STORAGETABLECOLUMNSEGMENTS для информации о column segments
 
+TABLE
+ │
+ ├── PARTITION 1
+ │      ├── Segment 1
+ │      ├── Segment 2
+ │      └── Segment 3
+ │
+ ├── PARTITION 2
+ │      ├── Segment 4
+ │      ├── Segment 5
+ │      └── Segment 6
+ │
+ └── PARTITION 3
+        ├── Segment 7
+        └── Segment 8
+
 
 
 Pageable
