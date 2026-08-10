@@ -1,0 +1,43 @@
+Порядок такой
+
+# Model
+Сколько GB?
+Сколько таблиц?
+Сколько строк?
+Какие самые большие таблицы?
+
+
+# Columns
+Какие колонки самые тяжелые?
+Какая cardinality?
+Какие dictionary самые большие?
+
+
+# Relationships
+Star Schema?
+Many-to-many?
+Bidirectional?
+
+
+# Query
+FE time?
+SE time?
+SE queries?
+CallbackDataID?
+Materialization? 
+
+
+# Power Query
+Folding?
+Какие операции выполняются на source?
+  
+
+# Source
+SELECT *?
+Индексы?
+Aggregation?
+Partitioning?
+
+
+# DAX оптимизация в самом конце  
+  
