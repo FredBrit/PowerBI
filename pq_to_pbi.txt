@@ -23,3 +23,38 @@
 | Удаление промежуточных Power Query колонок | Columns/Total Size ↓                                |
 
 
+
+Три вида оптимизации
+
+A. Уменьшаем количество данных
+Инструменты:
+-фильтрация;
+-aggregation;
+-incremental refresh;
+-изменение grain;
+-удаление истории.
+
+Это обычно самая мощная оптимизация
+
+
+B. Делаем существующие данные дешевле
+Инструменты:
+-rounding;
+-bucketing;
+-снижение precision;
+-integer keys;
+-category grouping;
+-правильные data types
+
+
+C. Убираем ненужные данные
+Инструменты:
+-unused columns;
+-технических полей;
+-длинных descriptions;
+-GUID;
+-raw JSON;
+-URL;
+-timestamp, если он не нужен
+
+
