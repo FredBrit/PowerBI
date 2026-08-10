@@ -91,3 +91,79 @@ Date (📅) | Int64 (число дней с 1899-12-30) | Value / Hash | Кар�
 DateTime (📅🕒) | Double (Дни + дробная часть времени) | Hash Encoding | Катастрофа. Миллисекунды раздувают словарь до миллионов строк, RLE не работает.
 
 
+# СЕГМЕНТЫ
+
+VertiPaq не хранит просто словарь + массив индексов. Он разбивает данные на сегменты.
+Sales
+│
+├── Segment 1
+│     ├── Product
+│     ├── Country
+│     └── Amount
+│
+├── Segment 2
+│     ├── Product
+│     ├── Country
+│     └── Amount
+
+Это позволяет движку эффективнее:
+-обрабатывать данные;
+-использовать CPU;
+-сжимать данные;
+-работать с диапазонами;
+-пропускать ненужные сегменты в некоторых сценариях.
+
+У сегмента могут быть статистические свойства.
+Segment 1
+MIN = 10
+MAX = 500
+
+Segment 2
+MIN = 1000
+MAX = 5000
+
+Это называется segment elimination / data skipping в соответствующих механизмах движка. Часть массива вообще не обрабатывается.
+
+# Storage Engine/ Formula Engine
+
+Вот наша модель:
+Power BI
+   │
+   ↓
+DAX Query
+   │
+   ↓
+Formula Engine
+   │
+   ↓
+Storage Engine
+   │
+   ↓
+VertiPaq
+   │
+   ├── Dictionary
+   ├── Segments
+   ├── Encoded Columns
+   └── Compression
+
+
+Может быть две ситуации:
+Хорошая (Storage Engine умеет очень быстро выполнить операцию)
+Formula Engine
+      │
+      ↓
+Storage Engine
+      │
+      ↓
+SUM compressed column
+
+Плохая
+Formula Engine (Formula Engine вынужден делать сложную построчную логику)
+ │
+ ├── row 1
+ ├── row 2
+ ├── row 3
+ ├── ...
+ └── row 50 000 000
+
+
