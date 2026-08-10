@@ -48,6 +48,113 @@ Dictionary
 
 
 HierSize
-  
+Это размер внутренних column hierarchy structures, автоматически создаваемых для колонок; это НЕ твои пользовательские иерархии типа:
+Year
+ └─ Quarter
+     └─ Month
+
+
+Encoding
+Показывает, какой тип encoding используется для сегментов. Microsoft описывает варианты HASH и VALUE; 
+DAX Studio может показывать Many, когда у сегментов разные варианты.
+
+VALUE
+Концептуально хорошо подходит для числовых значений, которые можно эффективно представить через значение/смещение.
+
+HASH
+Концептуально: Value -> Dictionary -> ID
+
+
+
+DataType
+При возможности хранить данные в минимально достаточном типе.
+Тип данных влияет на:
+-допустимое encoding;
+-размер представления;
+-Dictionary;
+-Data;
+-precision;
+-cardinality
+
+
+RI Violations
+RI = Referential Integrity
+Power BI должен учитывать специальную blank/unknown row на стороне one-to-many relationship.
+SQLBI описывает RI Violations именно как количество нарушений ссылочной целостности.
+
+
+User Hier Size
+Размер пользовательских иерархий
+
+
+Rel Size
+Relationship Size
+Память, используемая структурами связей между таблицами. SQLBI включает Relationship Size в общий размер таблицы.
+Модель со сложными связями может иметь дополнительные расходы.
+
+Особенно надо смотреть:
+-many-to-many
+-bidirectional
+
+
+% Table
+Сколько процентов таблицы занимает конкретный объект
+
+
+% DB
+То же самое, но относительно всей модели
+Если я оптимизирую именно эту колонку, потенциально я работаю с огромной частью модели.
+
+
+Columns
+Количество колонок в модели
+
+
+Partitions
+Partition — физическая часть таблицы
+Partitions особенно важны для:
+-incremental refresh;
+-обработки;
+-больших моделей;
+-управления refresh.
+DAX Studio также показывает отдельную вкладку Partitions.
+
+
+
+Segments
+Columnar engine разбивает данные на сегменты
+Сегменты важны для:
+-compression;
+-processing;
+-storage engine scans;
+-segment elimination;
+-параллельной обработки.
+Microsoft отдельно предоставляет DMV INFO.STORAGETABLECOLUMNSEGMENTS для информации о column segments
+
+
+
+Pageable
+Это уже немного другой уровень
+Показывает, может ли соответствующий segment быть выгружен/подгружен механизмом paging
+
+
+Resident
+Показывает, находится ли соответствующий segment сейчас в памяти
+Это уже про текущее состояние memory management, а не про качество самой модели
+
+
+Temperature
+Это условная «температура» сегмента — насколько часто он используется в соответствующем механизме memory management
+Microsoft описывает TEMPERATURE как scaled numeric value, связанный с частотой доступа к pageable segment с учётом времени последнего доступа
+
+
+Last Accessed
+Когда соответствующий pageable segment последний раз загружался/использовался.
+
+
+
+
+
+
 
   
