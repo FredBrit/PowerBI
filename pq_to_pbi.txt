@@ -1,1 +1,25 @@
+| Что делаем в Power Query / источнике       | Что изменится в VertiPaq                            |
+| ------------------------------------------ | --------------------------------------------------- |
+| Удаляем колонку                            | Columns, Total Size, модель                         |
+| Удаляем строки                             | Rows, Data, Segments, Total Size                    |
+| Фильтруем исторические данные              | Rows ↓, Data ↓, иногда cardinality ↓                |
+| `ROUND(Amount, 2)`                         | Cardinality ↓, Data ↓, Hier Size ↓                  |
+| Убираем миллисекунды из Time               | Cardinality ↓, Data/Hier Size ↓                     |
+| `DateTime → Date`                          | Cardinality часто ↓, Data/encoding могут измениться |
+| `Text → Integer key`                       | Dictionary обычно ↓, encoding может измениться      |
+| Объединяем редкие категории                | Cardinality ↓                                       |
+| `GUID → surrogate INT`                     | Dictionary/encoding/size потенциально ↓             |
+| Убираем ненужную precision                 | Cardinality ↓                                       |
+| Удаляем длинный текст                      | Dictionary ↓ очень сильно                           |
+| `SELECT * → SELECT нужные поля`            | Columns ↓, model size ↓                             |
+| Убираем неиспользуемые вычисляемые колонки | Total Size ↓                                        |
+| Исправляем FK                              | RI Violations ↓                                     |
+| Star Schema вместо M:M                     | Rel Size / query complexity потенциально ↓          |
+| Убираем ненужные relationships             | Rel Size ↓, query propagation проще                 |
+| Убираем Auto Date/Time                     | служебные таблицы ↓                                 |
+| Incremental Refresh                        | Partitions ↑, processing ↓                          |
+| Предагрегация данных                       | Rows ↓, Data ↓, query workload ↓                    |
+| Фильтрация на source                       | Rows ↓ до VertiPaq                                  |
+| Удаление промежуточных Power Query колонок | Columns/Total Size ↓                                |
+
 
