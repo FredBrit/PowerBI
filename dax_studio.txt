@@ -169,6 +169,20 @@ Last Accessed
 
 
 
+### DMV
+
+Для просмотра сегментов и партиций для конкретной модели
+
+SELECT *
+FROM $SYSTEM.DISCOVER_STORAGE_TABLE_COLUMN_SEGMENTS
+WHERE MEASURE_GROUP_NAME = 'Ceiling_to_2'
+
+
+
+
+
+
+
 
 
 
