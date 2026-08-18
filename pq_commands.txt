@@ -1,1 +1,4 @@
-
+### Создание запроса (таблицы) с уникальными значениями одного столбца
+= Table.Distinct(
+    Table.SelectColumns(Ceiling_to_2, {"Category"})
+)
