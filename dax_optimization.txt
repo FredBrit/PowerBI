@@ -117,6 +117,29 @@ CALCULATE(
 Разница: В первом случае FE строит промежуточные таблицы. Во втором — SE пересекает битмапы напрямую.
 
 
+Сценарий 6. Использование REMOVEFILTERS вместо ALL
+
+Плохо (ALL убирает все фильтры, включая нужные):
+EVALUATE
+ROW(
+    "Total_With_ALL",
+    CALCULATE(
+        SUM('Facts'[Amount]),
+        ALL('Dates')
+    )
+)
+
+Хорошо (REMOVEFILTERS убирает только фильтры с указанной таблицы):
+EVALUATE
+ROW(
+    "Total_With_RemoveFilters",
+    CALCULATE(
+        SUM('Facts'[Amount]),
+        REMOVEFILTERS('Dates')
+    )
+)
+
+Разница: ALL убирает все фильтры, включая те, что могут быть на других таблицах. REMOVEFILTERS — точечное воздействие.
 
 
 
