@@ -142,6 +142,42 @@ ROW(
 Разница: ALL убирает все фильтры, включая те, что могут быть на других таблицах. REMOVEFILTERS — точечное воздействие.
 
 
+Сценарий 7. Использование SWITCH вместо IF для сложных условий
+
+Плохо (условие в FE):
+
+EVALUATE
+ADDCOLUMNS(
+    SUMMARIZECOLUMNS(
+        'Dates'[Month],
+        "Total", SUM('Facts'[Amount])
+    ),
+    "Category",
+    IF([Total] > 100000, "High", "Low")
+)
+
+Хорошо (SWITCH + VAR):
+
+EVALUATE
+VAR Summary = 
+    SUMMARIZECOLUMNS(
+        'Dates'[Month],
+        "Total", SUM('Facts'[Amount])
+    )
+RETURN
+ADDCOLUMNS(
+    Summary,
+    "Category",
+    SWITCH(
+        TRUE(),
+        [Total] > 100000, "High",
+        [Total] > 50000, "Medium",
+        "Low"
+    )
+)
+
+Разница: В первом случае IF применяется построчно. Во втором — SWITCH с VAR более эффективен.
+
 
 
 
