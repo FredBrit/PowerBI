@@ -94,7 +94,30 @@ CALCULATE(
 Разница: TREATAS позволяет SE использовать битмап напрямую, без дополнительных операций FE.
 
 
-Сценарий 5. 
+Сценарий 5. Использование CALCULATE с несколькими фильтрами
+
+Плохо (фильтры применяются последовательно):
+
+Sales_Complex_Bad = 
+CALCULATE(
+    SUM('Facts'[Amount]),
+    FILTER('Dates', 'Dates'[Year] = 2022),
+    FILTER('Categories', 'Categories'[Category] = "Category_5")
+)
+
+Хорошо (фильтры применяются одновременно):
+
+Sales_Complex_Good = 
+CALCULATE(
+    SUM('Facts'[Amount]),
+    'Dates'[Year] = 2022,
+    'Categories'[Category] = "Category_5"
+)
+
+Разница: В первом случае FE строит промежуточные таблицы. Во втором — SE пересекает битмапы напрямую.
+
+
+
 
 
 
