@@ -66,4 +66,33 @@ CALCULATE(
 
 
 
+Сценарий 4. Использование TREATAS для кросс-фильтрации
+
+Плохо (фильтр через RELATEDTABLE):
+
+Sales_By_Category_Bad = 
+CALCULATE(
+    SUM('Facts'[Amount]),
+    'Categories'[Category] = "Category_5"
+)
+
+Хорошо (TREATAS для явной фильтрации):
+
+Sales_By_Category_Good = 
+VAR SelectedCategory = "Category_5"
+VAR CategoryIDs = 
+    TREATAS(
+        {SelectedCategory},
+        'Categories'[Category]
+    )
+RETURN
+CALCULATE(
+    SUM('Facts'[Amount]),
+    CategoryIDs
+)
+
+
+
+
+
 
