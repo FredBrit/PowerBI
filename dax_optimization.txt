@@ -19,3 +19,25 @@ SUM('Facts'[Amount]) * 1.15  -- SE считает сумму, FE только у
 
 
 Сценарий 2. Использование переменных (VAR) для избежания повторных вычислений  
+
+Плохо (фильтр вычисляется дважды):
+
+Sales_2022_Bad = 
+CALCULATE(
+    SUM('Facts'[Amount]),
+    'Dates'[Year] = 2022
+) + 
+CALCULATE(
+    SUM('Facts'[Amount]),
+    'Dates'[Year] = 2021
+)
+
+Хорошо (фильтр вычисляется один раз):
+
+Sales_2022_Good = 
+VAR Sales_2022 = CALCULATE(SUM('Facts'[Amount]), 'Dates'[Year] = 2022)
+VAR Sales_2021 = CALCULATE(SUM('Facts'[Amount]), 'Dates'[Year] = 2021)
+RETURN
+Sales_2022 + Sales_2021
+
+Разница: Без VAR FE может пересчитывать фильтры несколько раз в зависимости от контекста.
